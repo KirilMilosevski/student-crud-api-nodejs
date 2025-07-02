@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: student-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: kiril123
+      POSTGRES_DB: studentdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: student-api
+    depends_on:
+      - db
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DB_HOST: db            # 👈 Connects via Docker network
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: kiril123
+      DB_NAME: studentdb
+
+volumes:
+  pgdata:
