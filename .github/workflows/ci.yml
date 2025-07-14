@@ -1,0 +1,43 @@
+name: CI Pipeline
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'Dockerfile'
+      - 'Makefile'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Build API
+      run: make build
+
+    - name: Run Tests
+      run: make test
+
+    - name: Run Linting
+      run: make lint
+
+    - name: Docker Login
+      run: make docker-login
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Docker Build & Push
+      run: make docker-push
+      env:
+        DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
