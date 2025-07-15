@@ -31,6 +31,14 @@ jobs:
     - name: Run Linting
       run: make lint
 
+    - name: Debug Secrets
+      run: |
+        echo "DOCKER_USERNAME: ${DOCKER_USERNAME}"
+        echo "DOCKER_PASSWORD length: ${#DOCKER_PASSWORD}"
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
     - name: Docker Login
       run: |
         make docker-login DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}" DOCKER_PASSWORD="${{ secrets.DOCKER_PASSWORD }}"
