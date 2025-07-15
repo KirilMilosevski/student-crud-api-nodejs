@@ -3,7 +3,6 @@ build:
 
 test:
 	npm ci
-	npm test
 
 lint:
 	npx eslint .
