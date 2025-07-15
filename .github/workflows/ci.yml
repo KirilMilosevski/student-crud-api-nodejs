@@ -32,10 +32,8 @@ jobs:
       run: make lint
 
     - name: Docker Login
-      run: make docker-login
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |
+        make docker-login DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}" DOCKER_PASSWORD="${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Docker Build & Push
       run: make docker-push
