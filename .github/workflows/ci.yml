@@ -46,4 +46,4 @@ jobs:
     - name: Docker Build & Push
       run: make docker-push
       env:
-        DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+        DOCKER_REGISTRY: ${{ secrets.DOCKER_USERNAME }}
