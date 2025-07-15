@@ -2,8 +2,8 @@ build:
 	docker build -t student-api .
 
 test:
-	npm install
-	npm test
+	npm ci
+	npx jest
 
 lint:
 	npx eslint .
