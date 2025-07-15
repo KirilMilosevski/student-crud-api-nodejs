@@ -45,4 +45,4 @@ jobs:
 
     - name: Docker Build & Push
       run: |
-        make docker-push DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+        make docker-push DOCKER_NAME=${{ secrets.DOCKER_NAME }}
